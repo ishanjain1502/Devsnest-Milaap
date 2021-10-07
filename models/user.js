@@ -2,7 +2,12 @@ const sequelize = require('../database/initializeDatabase');
 const {Model, DataTypes} = require('sequelize');
 const roles = require('../utils/roles');
 
-class User extends Model{}
+class User extends Model{
+    //TODO: to check it
+    getFullName() {
+        return this.firstname + ' ' + this.lastname;
+    }
+}
 
 User.init({
     firstname: {
@@ -41,7 +46,7 @@ User.init({
     team: {
         type: DataTypes.STRING,
     },
-    profile: {
+    profileimage: {
         //TODO: Check by storing image on db
         type: DataTypes.BLOB
     }
