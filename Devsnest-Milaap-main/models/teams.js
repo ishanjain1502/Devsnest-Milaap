@@ -13,9 +13,17 @@ const Team = sequelize.define('Team', {
     teamId: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    batchLeader: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     tableName: 'Team'
 });
 
-module.exports = User;
+Team.beforeCreate(async (Team, options) => {
+    Team._teamId = uuidv4();
+});
+
+module.exports = Team;
