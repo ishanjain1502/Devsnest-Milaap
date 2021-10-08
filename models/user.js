@@ -19,7 +19,7 @@ User.init({
         allowNull:false
     },
     phonenumber: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.BIGINT,
         //TODO: Needs to look into unique
         unique: true,
         allowNull: false
@@ -40,7 +40,7 @@ User.init({
         defaultValue: true
     },
     role: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         defaultValue: roles.TeamMember
     },
     team: {
@@ -50,6 +50,9 @@ User.init({
         //TODO: Check by storing image on db
         type: DataTypes.BLOB
     }
+}, {
+    sequelize,
+    modelName: 'User'
 });
 
 module.exports = User;
