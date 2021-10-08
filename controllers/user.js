@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const bcrypt = require("bcrypt");
 
+
+
 exports.signup = async (req, res) => {
   const { firstname, lastname, phonenumber, password, email } = req.body;
   try {
@@ -34,14 +36,16 @@ exports.signin = async (req, res) => {
     if (isPasswordSame) {
       
       //creating a jwt token
-      // const token = jwt.sign
+      const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET,{expiresIn:10000});
+      res.cookie('token', token);
       
-      return res.status(200).send({
-        message: "User found successfully in db and password is also same",
+      return res.status(202).send({
+        message: "User signed in successfully",
+        token
       });
     } else {
-      return res.status(402).send({
-        message: "Un authorized",
+      return res.status(401).send({
+        message: "unauthorized",
       });
     }
   
@@ -55,3 +59,4 @@ exports.signout = (req, res) => {
     message: "User logged out successfully",
   });
 };
+
