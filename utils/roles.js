@@ -1,4 +1,4 @@
-module.exports.roles = {
+exports.roles = {
     TeamMember: 0,
     ViceTeamLeader: 1,
     TeamLeader: 2,

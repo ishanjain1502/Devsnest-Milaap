@@ -32,6 +32,10 @@ exports.signin = async (req, res) => {
     const user = await User.findOne({ where: {email } });
     const isPasswordSame = await bcrypt.compare(password, user.password);
     if (isPasswordSame) {
+      
+      //creating a jwt token
+      // const token = jwt.sign
+      
       return res.status(200).send({
         message: "User found successfully in db and password is also same",
       });
@@ -40,6 +44,7 @@ exports.signin = async (req, res) => {
         message: "Un authorized",
       });
     }
+  
   } catch (err) {
     console.log(`Error while finding in DB ${err}`);
   }
