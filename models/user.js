@@ -47,7 +47,7 @@ User.init({
         type: DataTypes.STRING,
     },
     profileimage: {
-        //TODO: Check by storing image on db
+        //TODO: Check how to store  image on db
         type: DataTypes.BLOB
     }
 }, {
