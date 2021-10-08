@@ -30,6 +30,7 @@ exports.signin = async (req, res) => {
 
   try {
 <<<<<<< HEAD
+<<<<<<< HEAD
     const user = await User.findOne({ where: { email } });
     const isPasswordSame = await bcrypt.compare(password, user.password);
     if (isPasswordSame) {
@@ -42,12 +43,17 @@ exports.signin = async (req, res) => {
       });
     }
 =======
+=======
+>>>>>>> parent of 63b62ef... VP password check done
     const user = await User.findOne({ email });
     return res.status(200).send({
       message: "User found successfully in db",
       user,
     });
+<<<<<<< HEAD
 >>>>>>> parent of 63b62ef (VP password check done)
+=======
+>>>>>>> parent of 63b62ef... VP password check done
   } catch (err) {
     console.log(`Error while finding in DB ${err}`);
   }
