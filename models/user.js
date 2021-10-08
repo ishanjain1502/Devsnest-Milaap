@@ -1,7 +1,6 @@
 const sequelize = require('../database/initializeDatabase');
 const {Model, DataTypes} = require('sequelize');
 const roles = require('../utils/roles');
-const bcrypt = require('bcrypt');
 
 class User extends Model{
     //TODO: to check it
@@ -26,7 +25,7 @@ User.init({
         allowNull:false
     },
     phonenumber: {
-        type: DataTypes.BIGINT(20),
+        type: DataTypes.BIGINT,
         //TODO: Needs to look into unique
         unique: true,
         allowNull: false
@@ -61,12 +60,6 @@ User.init({
 }, {
     sequelize,
     modelName: 'User'
-});
-
-//TODO: added hook to update password before creation password getting encrypted
-User.beforeCreate(async (user, options) => {
-    const salt = await bcrypt.genSalt(9);
-    user.password = await bcrypt.hash(user.password, salt); 
 });
 
 module.exports = User;
