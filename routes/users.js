@@ -9,7 +9,7 @@ router.post("/user/signup", signup);
 
 //TODO: will do via jwt
 //TODO: testing needs to be done too
-router.post("/user/singin", signin);
+router.post("/user/signin", signin);
 
 router.get("/signout", signout);
 

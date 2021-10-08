@@ -1,6 +1,7 @@
 const User = require("../models/user");
-const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
+const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
+const bcrypt = require("bcrypt");
 
 exports.signup = async (req, res) => {
   const { firstname, lastname, phonenumber, password, email } = req.body;
@@ -17,18 +18,28 @@ exports.signup = async (req, res) => {
     });
   } catch (err) {
     console.log(`Error while storing to db, ${err}`);
+    return res.status(500).send({
+      err,
+    });
   }
 };
 
+//TODO: status message needs to be updated
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    return res.status(200).send({
-      message: "User found successfully in db",
-      user,
-    });
+    const user = await User.findOne({ where: {email } });
+    const isPasswordSame = await bcrypt.compare(password, user.password);
+    if (isPasswordSame) {
+      return res.status(200).send({
+        message: "User found successfully in db and password is also same",
+      });
+    } else {
+      return res.status(402).send({
+        message: "Un authorized",
+      });
+    }
   } catch (err) {
     console.log(`Error while finding in DB ${err}`);
   }
