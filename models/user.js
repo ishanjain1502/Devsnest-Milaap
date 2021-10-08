@@ -31,6 +31,7 @@ User.init({
     },
     email: {
         type: DataTypes.STRING,
+        unique: true,
         validate: {
             //TODO: Verify regex is working or not article refered https://www.w3resource.com/javascript/form/email-validation.php
             is: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
