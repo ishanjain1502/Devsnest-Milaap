@@ -12,6 +12,7 @@ const sequelize = new Sequelize(
 
 sequelize.sync();
 
+//connecting to POSTGRES
 (async function() {
     try {
         await sequelize.authenticate();
