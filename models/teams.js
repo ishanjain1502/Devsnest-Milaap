@@ -10,12 +10,16 @@ const Team = sequelize.define('Team', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    teamId: {
+    _teamId: {
         type: DataTypes.STRING,
         allowNull: false
     }
 }, {
     tableName: 'Team'
 });
+Team.beforeCreate(async (Team, options) => {
+    Team._teamId = uuidv4();
 
-module.exports = User;
+   });
+
+module.exports = Team;
