@@ -4,3 +4,6 @@ link to sequelize ORM -> https://sequelize.org/master/manual/getting-started.htm
 
 //TODO:
 express-validator ? should we use
+
+start script ->
+npm run devserver
