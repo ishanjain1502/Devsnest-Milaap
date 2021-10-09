@@ -2,7 +2,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../database/initializeDatabase');
 //uid, present/absent , DATE ,
 const Scrum = sequelize.define('Scrum', {
-    _scrumId: {
+    _scrumId:{  
         type: DataTypes.UUID,
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
@@ -13,7 +13,7 @@ const Scrum = sequelize.define('Scrum', {
         allowNull: false,
     },
     _teamId:{
-        type: DataTypes.UUID,
+        type: DataTypes.STRING,
         allowNull: false,
     },  
     isPresent: {
@@ -47,9 +47,10 @@ const Scrum = sequelize.define('Scrum', {
 }, {
     tableName: 'Scrum'
 });
+
 Scrum.beforeCreate(async (scrum, options) => {
-    const date = new Date();
-    scrum.Date=date.toDateString();
+    const d= new Date();
+scrum.Date=d.toDateString();
 });
 
 
