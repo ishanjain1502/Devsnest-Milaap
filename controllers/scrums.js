@@ -10,7 +10,8 @@ exports.fillScrum = async (req, res) => {
     const date = new Date();
     const scrumData = await Scrum.findOne({
       where: {
-        [Op.and]: [{ _uid: _uid }, { Date: date.toDateString() }], //To check
+         _uid: _uid,
+         Date: date.toDateString()   //To check
       },
     });
 
@@ -19,6 +20,7 @@ exports.fillScrum = async (req, res) => {
         message: "Scrum Sheet Already Filled",
       });
     } else {
+      console.log("in else");
       const scrum = await Scrum.create({
         _uid,
         _teamId,

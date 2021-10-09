@@ -27,7 +27,7 @@ router.param("uid", async (req, res, next, uid) => {
     const date = new Date();
     const scrum = await Scrum.findOne({
       where: {
-        [Op.and]: [{ _uid: uid }, { Date: date.toDateString() }],
+        _uid: uid , Date: date.toDateString() 
       },
     });
     if (scrum) {
