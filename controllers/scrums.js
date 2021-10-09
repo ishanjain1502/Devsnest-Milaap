@@ -3,27 +3,25 @@ const Scrum = require("../models/scrums");
 const User = require("../models/user");
 const Team = require("../models/teams");
 
-
 exports.fillScrum = async (req, res) => {
-
-  const { _uid, backlog, lastLecture, progress, link, topicsToCover } =
+  const { _uid, _teamId, backlog, lastLecture, progress, link, topicsToCover } =
     req.body;
-
-  const userName = await User.findOne({ where: { _id: _uid } });
-  if (userName === null) {
-    console.log("User Not found!");
-    return res.status(401).send({
-      message: "User Not Found",
+  try {
+    const date = new Date();
+    const scrumData = await Scrum.findOne({
+      where: {
+        [Op.and]: [{ _uid: _uid }, { Date: date.toDateString() }], //To check
+      },
     });
-  } else {
-    console.log("First NAme: ", userName.firstname);
-    //TODO:get userTeam from uid
-    const userTeam = await Team.findOne({ where: { teamMates :{[Op.contains]: _uid }} });
-    
-    try {
+
+    if(scrumData) {
+      return res.status(500).send({
+        message: "Scrum Sheet Already Filled",
+      });
+    } else {
       const scrum = await Scrum.create({
         _uid,
-        _teamId=userTeam._teamId,
+        _teamId,
         backlog,
         lastLecture,
         progress,
@@ -33,63 +31,40 @@ exports.fillScrum = async (req, res) => {
       return res.status(200).send({
         message: "Scrum Sheet Filled successfully",
       });
-    } catch (err) {
-      console.log(`Error while storing to db, ${err}`);
-      return res.status(500).send({
-        err,
-      });
     }
+  } catch (err) {
+    return res.status(500).send({
+      message: err,
+    });
   }
 };
 
 exports.update = async (req, res) => {
-
-  const { _uid, backlog, lastLecture, progress, link, topicsToCover } = req.body;
-
-
-  if (userName === null) {
-    console.log("User Not found!");
-  } else {
   
-  if(backlog!=undefined)
-  {
-    try {
-      const result = await Scrum.update(
-        { backlog: backlog },
-        {
-          where: {
-            [Op.and]: [
-              {_uid: _uid } , {date: Date.now() }
-            ]
-          }
-        })
-      res.json({
-        success: true
-      }, 200);
-    } catch (err) {
-      throw new Error(error)
-    }
-  }
-  //TODO backlog *5 for lastlecture,link,progreess,...
-  
-  }
+    const scrum = req.scrum;
 
+    if(req.body.backlog)
+    scrum.backlog = req.body.backlog;
+    if(req.body.lastLecture)
+    scrum.lastLecture = req.body.lastLecture;   
+    if(req.body.progress)
+    scrum.progress = req.body.progress;
+    if(req.body.link)
+    scrum.link = req.body.link;
+    if(req.body.topicsToCover)
+    scrum.topicsToCover = req.body.topicsToCover;
+    const ascrum = await scrum.save();
+    res.status(200).send(scrum);
+    
 };
 
 exports.markPresent = async (req, res) => {
-  const { _uid, isPresent } = req.body;
+  const scrum = req.scrum;
 
-  // middleware
-  // {
-  //     leader: "your uid",user.find(VL,VTL).role then update
-  //
-  //         temmember: "uid",
-  //         present: "true/false"
-  //
-  //     }
+  scrum.isPresent = req.body.isPresent;
+  const ascrum = await scrum.save();
 
+  res.status(200).send(scrum);
 };
 
-exports.viewScrum= async (req, res) => {
-
-};
+exports.viewScrum = async (req, res) => {};
