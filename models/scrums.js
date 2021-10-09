@@ -4,35 +4,43 @@ const sequelize = require('../database/initializeDatabase');
 const Scrum = sequelize.define('Scrum', {
     _uid: {
         type: DataTypes.UUID,
-        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
     },
+    _teamId:{
+        type: DataTypes.UUID,
+        allowNull: false,
+    },  
     isPresent: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        // allowNull: false
     },
     Date: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
     },
     backlog: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
         allowNull: false
     },
     lastLecture: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
         allowNull: false
     },
     progress: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    link: {
+        type: DataTypes.STRING,
         allowNull: false
     },
     topicsToCover: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
         allowNull: false
     },
 }, {
     tableName: 'Scrum'
 });
+
 
 module.exports = Scrum;
