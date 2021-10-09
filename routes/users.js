@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
 const router = express.Router();
-const { signin, signout, signup, getUserInfo, updateIsActive } = require("../controllers/user");
+const { signin, signout, signup, getUserInfo, updateIsActive,deleteUser } = require("../controllers/user");
 
 //params
 router.param("emailId", async (req, res, next, emailId) => {

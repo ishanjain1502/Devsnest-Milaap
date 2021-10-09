@@ -74,3 +74,13 @@ exports.isViceTeamLeader =  (req, res, next) => {
         })
     }
 };
+
+exports.isViceTeamLeaderOrLeader =  (req, res, next) => {
+    if(req.auth && req.auth._id && (req.auth.role === roles.ViceTeamLeader || req.auth.role === roles.TeamLeader)) {
+        next()
+    } else {
+        return res.status(402).json({
+            message: "Not Vice Team Leader Or Team Leader"
+        })
+    }
+};

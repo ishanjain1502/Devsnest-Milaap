@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use('/api', userRouter);
-app.use('/team', scrumRouter);
+app.use('/api', scrumRouter);
 
 
 app.listen(PORT, () => {
