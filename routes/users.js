@@ -16,9 +16,9 @@ router.post('/user/signin', signin);
 
 router.get('/user/signout', signout);
 
-router.get('/user/testRoute', isSignedIn, (req, res) => {
+router.get('/user/testRoute', ...isSignedIn(), (req, res) => {
     res.status(200).send({
-        message: 'Success'
+        message: 'Authorized'
     })
 });
 

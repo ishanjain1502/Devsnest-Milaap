@@ -36,7 +36,8 @@ exports.signin = async (req, res) => {
     if (isPasswordSame) {
       
       //creating a jwt token
-      const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET,{expiresIn:10000});
+                                                                      //expires in 30 min        
+      const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET,{expiresIn:30*60, algorithm:'HS256'});
       res.cookie('token', token);
       
       return res.status(202).send({
