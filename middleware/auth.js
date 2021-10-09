@@ -1,5 +1,6 @@
 const expressJwt = require('express-jwt');
 const User = require('../models/user');
+const {roles} = require('../utils/roles');
 exports.isSignedIn = () => {
     return [
         expressJwt({
@@ -33,19 +34,43 @@ exports.isAuthenticated = async (req, res, next) => {
     }
 };
 
-exports.isAdmin = () => {
-
+exports.isAdmin = (req, res, next) => {
+    if(req.auth && req.auth._id && req.auth.role === roles.Admin) {
+        next()
+    } else {
+        return res.status(402).json({
+            message: "Not Admin"
+        })
+    }
 };
 
-exports.isBatchLeader = () => {
-
+exports.isBatchLeader = (req, res, next) => {
+    if(req.auth && req.auth._id && req.auth.role === roles.BatchLeader) {
+        next()
+    } else {
+        return res.status(402).json({
+            message: "Not Batch Leader"
+        })
+    }
 };
 
 
-exports.isTeamLeader = () => {
-
+exports.isTeamLeader =  (req, res, next) => {
+    if(req.auth && req.auth._id && req.auth.role === roles.TeamLeader) {
+        next()
+    } else {
+        return res.status(402).json({
+            message: "Not Team Leader"
+        })
+    }
 };
 
-exports.isViceTeamLeader = () => {
-
+exports.isViceTeamLeader =  (req, res, next) => {
+    if(req.auth && req.auth._id && req.auth.role === roles.ViceTeamLeader) {
+        next()
+    } else {
+        return res.status(402).json({
+            message: "Not Vice Team Leader"
+        })
+    }
 };
