@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const {roles} = require('../utils/roles');
+const { roles } = require("../utils/roles");
 const bcrypt = require("bcrypt");
 
 exports.signup = async (req, res) => {
@@ -34,19 +34,23 @@ exports.signin = async (req, res) => {
     if (isPasswordSame) {
       //creating a jwt token
       //expires in 30 min
-      const token = jwt.sign({ _id: user._id, role: user.role ||  roles.TeamMember}, process.env.JWT_SECRET, {
-        expiresIn: 30 * 60,
-        algorithm: 'HS256',
-      });
-      res.cookie('token', token);
+      const token = jwt.sign(
+        { _id: user._id, role: user.role || roles.TeamMember },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: 30 * 60,
+          algorithm: "HS256",
+        }
+      );
+      res.cookie("token", token);
 
       return res.status(202).send({
-        message: 'User signed in successfully',
+        message: "User signed in successfully",
         token,
       });
     } else {
       return res.status(401).send({
-        message: 'unauthorized',
+        message: "unauthorized",
       });
     }
   } catch (err) {
@@ -56,8 +60,36 @@ exports.signin = async (req, res) => {
 
 //TODO: need to do more testing
 exports.signout = (req, res) => {
-  res.clearCookie('token');
+  res.clearCookie("token");
   return res.status(200).send({
-    message: 'User logged out successfully',
+    message: "User logged out successfully",
   });
+};
+
+exports.getUserInfo = (req, res) => {
+  const { firstname, lastname, phonenumber, email, profileimage, isActive } =
+    req.user;
+  return res.status(200).json({
+    firstname,
+    lastname,
+    phonenumber,
+    email,
+    profileimage,
+    isActive,
+  });
+};
+
+exports.updateIsActive = async (req, res) => {
+  try {
+    const user = req.user;
+    user.isActive = req.body.isActive;
+    await user.save();
+    return res.status(200).json({
+      message: `updated active status of ${user.firstname}`,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "unable to update status",
+    });
+  }
 };
