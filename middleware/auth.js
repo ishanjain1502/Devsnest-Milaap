@@ -1,12 +1,4 @@
 const expressJwt = require('express-jwt');
-
-//TODO: need to check why unauthrized error is throw altough isSignedIn works with beare token
-// exports.isSignedIn = expressJwt({
-//     secret: process.env.JWT_SECRET,
-//     userProperty: 'auth',
-//     algorithms:['HS256']
-// });
-
 exports.isSignedIn = () => {
     return [
         expressJwt({
