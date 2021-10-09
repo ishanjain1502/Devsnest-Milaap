@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8100;
 
 //Routes
 const userRouter = require('./routes/users');
+const scrumRouter = require('./routes/scrums');
 
 const app = express();
 //for JWT
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use('/api', userRouter);
+app.use('/team', scrumRouter);
 
 
 app.listen(PORT, () => {

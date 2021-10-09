@@ -1,25 +1,78 @@
 const express = require("express");
 const User = require("../models/user");
 const router = express.Router();
-const {signin, signout, signup} = require('../controllers/user');
+const { signin, signout, signup, getUserInfo, updateIsActive } = require("../controllers/user");
+
+//params
+router.param("emailId", async (req, res, next, emailId) => {
+  if (emailId) {
+    try {
+      const user = await User.findOne({ where: { email: emailId } });
+      if (user) {
+        req.user = user;
+        next();
+      } else {
+        throw Error("Invalid user");
+      }
+    } catch (err) {
+      return res.status(404).send({
+        message: "Email not found",
+      });
+    }
+  }
+});
+
+router.param("isActive", async (req, res, next, isActive) => {
+    const active = isActive === "true" ? true : false;
+    req.body.isActive = active;
+    next();
+});
 
 //middlewares
-const {isSignedIn} = require('../middleware/auth');
+const { isSignedIn, isAuthenticated, isAdmin } = require("../middleware/auth");
 
 //TODO: adding middleware is remaining and bcrypting password too
-//TODO: testing route
-router.post('/user/signup', signup);
+router.post("/user/signup", signup);
 
-//TODO: will do via jwt
 //TODO: testing needs to be done too
-router.post('/user/signin', signin);
+router.post("/user/signin", signin);
 
-router.get('/user/signout', signout);
+router.get("/user/signout", signout);
 
-router.get('/user/testRoute', ...isSignedIn(), (req, res) => {
-    res.status(200).send({
-        message: 'Authorized'
-    })
+router.get("/user/profile/info/:emailId", getUserInfo);
+
+router.put(
+  "/user/profile/info/:emailId",
+  ...isSignedIn(),
+  isAuthenticated,
+  (req, res) => {
+    //TODO: should be updated by same user
+  }
+);
+
+router.put(
+  "/user/profile/active/:isActive/:emailId",
+  ...isSignedIn(),
+  isAuthenticated,
+  isAdmin,
+  updateIsActive
+);
+
+router.delete(
+  "/user/profile/info/:emailId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  (req, res) => {
+    //TODO: user profile should only be deleted by Admin
+  }
+);
+
+router.get("/user/testRoute", ...isSignedIn(), isAuthenticated, (req, res) => {
+  res.status(200).send({
+    message: "Authorized",
+    auth: req.auth,
+  });
 });
 
 module.exports = router;
