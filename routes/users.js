@@ -4,7 +4,7 @@ const router = express.Router();
 const {signin, signout, signup} = require('../controllers/user');
 
 //middlewares
-const {isSignedIn} = require('../middleware/auth');
+const {isSignedIn, isAuthenticated} = require('../middleware/auth');
 
 //TODO: adding middleware is remaining and bcrypting password too
 //TODO: testing route
@@ -16,9 +16,10 @@ router.post('/user/signin', signin);
 
 router.get('/user/signout', signout);
 
-router.get('/user/testRoute', ...isSignedIn(), (req, res) => {
+router.get('/user/testRoute', ...isSignedIn(), isAuthenticated, (req, res) => {
     res.status(200).send({
-        message: 'Authorized'
+        message: 'Authorized',
+        auth: req.auth
     })
 });
 
