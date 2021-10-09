@@ -2,6 +2,12 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../database/initializeDatabase');
 //uid, present/absent , DATE ,
 const Scrum = sequelize.define('Scrum', {
+    _scrumId: {
+        type: DataTypes.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        primaryKey: true
+    },
     _uid: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -15,7 +21,7 @@ const Scrum = sequelize.define('Scrum', {
         // allowNull: false
     },
     Date: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: true
     },
     backlog: {
@@ -40,6 +46,10 @@ const Scrum = sequelize.define('Scrum', {
     },
 }, {
     tableName: 'Scrum'
+});
+Scrum.beforeCreate(async (scrum, options) => {
+    const date = new Date();
+    scrum.Date=date.toDateString();
 });
 
 
