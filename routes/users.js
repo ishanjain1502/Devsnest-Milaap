@@ -60,12 +60,10 @@ router.put(
 
 router.delete(
   "/user/profile/info/:emailId",
-  isSignedIn,
+  ...isSignedIn(),
   isAuthenticated,
   isAdmin,
-  (req, res) => {
-    //TODO: user profile should only be deleted by Admin
-  }
+  deleteUser
 );
 
 router.get("/user/testRoute", ...isSignedIn(), isAuthenticated, (req, res) => {

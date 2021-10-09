@@ -93,3 +93,18 @@ exports.updateIsActive = async (req, res) => {
     });
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  const name = req.user.firstname;
+  const user = req.user;
+  try {
+      await User.destroy({where: {_id: user._id}});
+      return res.status(200).json({
+          message: `${name} User deleted `
+      })
+  } catch (err) {
+      return res.status(500).json({
+          message: `${name} User deleted `
+      })
+  }
+};
