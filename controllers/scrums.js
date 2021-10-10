@@ -23,7 +23,7 @@ exports.fillScrum = async (req, res) => {
     try {
       const scrum = await Scrum.create({
         _uid,
-        _teamId=userTeam._teamId,
+        //_teamId=userTeam._teamId,
         backlog,
         lastLecture,
         progress,
