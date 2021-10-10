@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "devserver": "nodemon server.js"
+    "devserver": "nodemon server.js",
+    "start": "node server.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -22,5 +23,21 @@
     "pg": "^8.7.1",
     "sequelize": "^6.6.5",
     "uuid": "^8.3.2"
-  }
+  },
+  "description": "link to sequelize ORM -> https://sequelize.org/master/manual/getting-started.html",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamyakJain2020/Devsnest-Milaap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "14.x"
+  },
+  "bugs": {
+    "url": "https://github.com/SamyakJain2020/Devsnest-Milaap/issues"
+  },
+  "homepage": "https://github.com/SamyakJain2020/Devsnest-Milaap#readme"
 }

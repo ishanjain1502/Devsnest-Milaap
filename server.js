@@ -22,7 +22,7 @@ app.use(express.json());
 app.use('/api', userRouter);
 app.use('/api', batchRouter);
 app.use('/api', teamRouter);
-//app.use('/api', scrumRouter);
+app.use('/api', scrumRouter);
 
 
 app.listen(PORT, () => {
