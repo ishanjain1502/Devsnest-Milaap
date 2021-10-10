@@ -40,7 +40,16 @@ router.param('uid',async (req, res, next) => {
     }
 });
 
+router.param('teamname', (req, res, next) => {
+    if(!req.params.teamname) {
+        return res.status(400).json({
+            message: 'Please provide team name'
+        });
+    }
+    next();
+});
+
 //batchleader will only be created by admin
-router.post('/batchleader/create/:uid',...isSignedIn(), isAuthenticated, isAdmin, createBatchLeader);
+router.post('/batchleader/create/:uid/:teamname',...isSignedIn(), isAuthenticated, isAdmin, createBatchLeader);
 
 module.exports = router;

@@ -19,6 +19,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use('/api', userRouter);
 app.use('/api', batchRouter);
+
 //app.use('/api', scrumRouter);
 
 

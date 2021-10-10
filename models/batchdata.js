@@ -8,6 +8,10 @@ BatchLeader.init({
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true
+    }, 
+    teamname: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 },{
     sequelize,

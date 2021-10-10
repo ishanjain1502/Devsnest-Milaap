@@ -1,7 +1,12 @@
-const BatchLeader = require('../models/batchdata');
+const {BatchLeader} = require('../models/batchdata');
 exports.createBatchLeader =  async (req, res) => {
     try {
-        const batchleader = await BatchLeader.create({_uid: req.params.uid});
+        const _uid =  req.params.uid;
+        const teamname =  req.params.teamname;
+        const batchleader = await BatchLeader.create({
+            _uid,
+            teamname
+        });
         return res.status(200).json({
             message: 'Batch leader entry added successfully'
         });
