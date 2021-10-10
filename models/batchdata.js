@@ -23,7 +23,6 @@ class BatchData extends Model{}
 BatchData.init({
     _uid: {
         type: DataTypes.STRING,
-        unique: true,
         allowNull: false,
     },
     active: {
@@ -109,6 +108,11 @@ BatchData.init({
 },{
     sequelize,
     modelName:'BatchData'
+});
+
+BatchData.beforeCreate(async (batchData, options)=>{
+    batchData.date = new Date();
+
 });
 
 module.exports = {BatchData, BatchLeader}
