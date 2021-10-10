@@ -15,6 +15,11 @@ const {
     BatchData
 } = require('../models/batchdata');
 
+//controllers
+const {
+    createBatchLeader
+} = require('../controllers/batchdata');
+
 //extracting params and assigning role to BatchLeader
 router.param('uid',async (req, res, next) => {
     try{
@@ -36,17 +41,6 @@ router.param('uid',async (req, res, next) => {
 });
 
 //batchleader will only be created by admin
-router.post('/batchleader/create/:uid',...isSignedIn(), isAuthenticated, isAdmin, async (req, res) => {
-    try {
-        const batchleader = await BatchLeader.create({_uid: req.params.uid});
-        return res.status(200).json({
-            message: 'Batch leader entry added successfully'
-        });
-    } catch (err) {
-        return res.status(500).json({
-            message: 'Problem while storing entry in db'
-        });
-    }
-});
+router.post('/batchleader/create/:uid',...isSignedIn(), isAuthenticated, isAdmin, createBatchLeader);
 
 module.exports = router;
