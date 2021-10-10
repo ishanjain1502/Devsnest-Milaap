@@ -18,7 +18,9 @@ const {
 
 //controllers
 const {
-    createBatchLeader
+    createBatchLeader,
+    fillbatchdetails,
+    getbatchdetails
 } = require('../controllers/batchdata');
 
 //extracting params and assigning role to BatchLeader
@@ -56,48 +58,8 @@ router.param('teamname', (req, res, next) => {
 router.post('/batchleader/create/:uid/:teamname',...isSignedIn(), isAuthenticated, isAdmin, createBatchLeader);
 
 //batchleader will fill entry once per week
-router.post('/batchleader/fill/group/progress/:uid', ...isSignedIn(), isAuthenticated, isBatchLeader,async (req, res) => {
-    const {
-        active,
-        isPartiallyActive,
-        inactive,
-        teamcoordination,
-        teamLeaderAvaliblity,
-        viceTeamLeaderAvailiblity,
-        doubtSessionTaken,
-        teamRating,
-        videoScrum,
-        thaOfTL,
-        thaOfVTL,
-        remarks
-    } = req.body;
-    const _uid = req.params.uid;
-    try {
-        const batchData = await BatchData.create({
-            _uid,
-            active,
-            isPartiallyActive,
-            inactive,
-            teamcoordination,
-            teamLeaderAvaliblity,
-            viceTeamLeaderAvailiblity,
-            doubtSessionTaken,
-            teamRating,
-            videoScrum,
-            thaOfTL,
-            thaOfVTL,
-            remarks
+router.post('/batchleader/fill/group/progress/:uid', ...isSignedIn(), isAuthenticated, isBatchLeader,fillbatchdetails);
 
-        });
-        return res.status(200).json({
-            message: 'Batch data stored successfully'
-        });
-    } catch (err) {
-        console.log(`Error occured :${err}`);
-        return res.status(500).json({
-            message: 'Internal server error occured'
-        });
-    }
-});
+router.get('/batchleader/group/progress/:uid', ...isSignedIn(), isAuthenticated, isBatchLeader,getbatchdetails);
 
 module.exports = router;
