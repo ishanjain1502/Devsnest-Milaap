@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use('/api', userRouter);
 app.use('/api', batchRouter);
-app.use('/api' teamRouter);
+app.use('/api', teamRouter);
 //app.use('/api', scrumRouter);
 
 
