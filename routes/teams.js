@@ -4,6 +4,6 @@ const router = express.Router();
 
 const { teamInput } = require('../controllers/team');
 
-router.post("/api/teamInput", teamInput);
+router.post("/teamInput", teamInput);
 
 module.exports = router;
